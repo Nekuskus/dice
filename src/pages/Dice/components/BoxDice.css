@@ -1,0 +1,31 @@
+.boxDice {
+    font-size: calc(10px + 3vmin);
+    color: rgb(255, 255, 255);
+    background-color: red;
+    font-weight: bold;
+    border-radius: 0.5vmin;
+    outline: 0.25vmin;
+    outline-style: outset;
+    display: inline-block;
+    width: calc((10px + 3vmin)*3);
+    padding: 1vmin;
+    margin: 1vmin;
+}
+form.diceForm {
+
+}
+form.diceForm span {
+    float: left;
+}
+form.diceForm input.diceTextbox {
+    width: 2rem;
+    height: 2rem;
+    align-content: center;
+    font-size: calc(10px + 1.5vmin);
+    font-weight: regular;
+    float: left;
+    
+}
+form.diceForm input.diceTextbox::after {
+    float: clear;
+}

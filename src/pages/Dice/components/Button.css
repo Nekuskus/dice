@@ -3,7 +3,8 @@ button {
     background-color: #607D8B;
     font-size: calc(10px + 2vmin);
     color: rgb(255, 255, 255);
-    font-weight: bold;
+    /*font-weight: bold;*/
+    font-family: 'Consolas', sans-serif;
     cursor: pointer;
     border-radius: 0.5vmin;
     outline: 0.25vmin;

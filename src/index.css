@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Inter&family=Poppins&display=swap');
 body {
     margin: 0;
     /*font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif; */
-    font-family: 'Fira Sans', 'Cantarell', sans-serif;
+    font-family: sans-serif;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: calc(10px + 1vmin);
@@ -17,15 +19,14 @@ body {
     padding: 1.5vmin;
     margin: 0;
 }
-
+/*
 h1,
 h2,
 p,
 ul,
 li {
-    font-family: sans-serif;
 }
-
+*/
 ul.header {
     background-color: #5D4037;
     padding: 0;
@@ -49,7 +50,8 @@ ul.header li p {
     color: #FFF;
     font-weight: bold;
     text-decoration: none;
-    padding: 2vmin;
+    padding: 0.5vmin;
+    padding-left: 2vmin;
     display: inline-block;
 }
 
@@ -82,6 +84,7 @@ ul.footer li a {
     text-decoration: unset;
     display: inline-block;
 }
+
 
 
 .content {
