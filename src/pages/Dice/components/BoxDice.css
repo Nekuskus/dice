@@ -11,9 +11,6 @@
     padding: 1vmin;
     margin: 1vmin;
 }
-form.diceForm {
-
-}
 form.diceForm span {
     float: left;
 }
@@ -26,6 +23,6 @@ form.diceForm input.diceTextbox {
     float: left;
     
 }
-form.diceForm input.diceTextbox::after {
-    float: clear;
+form.diceBox::after {
+    float: none;
 }

@@ -14,7 +14,13 @@ button {
 button:hover {
     background-color: #5F6C7A;
 }
-
+.back {
+    grid-column: 3 / 1;
+    background-color: #9b0f0f;
+}
+.back:hover {
+    background-color: #8a0e0e;
+}
 .roll {
     grid-column: 3 / 5;
     background-color: #795548;

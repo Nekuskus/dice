@@ -1,0 +1,20 @@
+.boxOperator {
+    font-size: calc(10px + 3vmin);
+    color: rgb(255, 255, 255);
+    background-color: rgb(16, 19, 172);
+    font-weight: bold;
+    border-radius: 0.5vmin;
+    outline: 0.25vmin;
+    outline-style: outset;
+    display: inline-block;
+    width: calc(10px + 4.5vmin);
+    padding: 1vmin;
+    margin: 1vmin;
+    height: calc(2rem + 1vmin);
+}
+.boxValue {
+    float: left;
+}
+.boxClear {
+    float: none;
+}

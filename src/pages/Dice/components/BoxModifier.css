@@ -1,29 +1,28 @@
-.boxNDice {
+.boxMod {
     font-size: calc(10px + 3vmin);
     color: rgb(255, 255, 255);
-    background-color: rgb(153, 67, 67);
+    background-color: rgb(58, 4, 129);
     font-weight: bold;
     border-radius: 0.5vmin;
     outline: 0.25vmin;
     outline-style: outset;
     display: inline-block;
-    width: calc((10px + 3vmin)*4);
+    width: calc((10px + 3vmin)*2);
     padding: 1vmin;
     margin: 1vmin;
-    height: calc(2rem + 1vmin);
 }
-form.diceNForm span {
+form.modForm span {
     float: left;
 }
-form.diceNForm input.diceNTextbox {
-    width: 2.5rem;
-    height: 2.5rem;
+form.modForm input.modTextbox {
+    width: 2rem;
+    height: 2rem;
     align-content: center;
     font-size: calc(10px + 1.5vmin);
     font-weight: regular;
     float: left;
     
 }
-form.diceNBox::after {
-    float: clear;
+form.modBox::after {
+    float: none;
 }

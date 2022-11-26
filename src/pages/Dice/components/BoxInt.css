@@ -1,0 +1,29 @@
+.boxInt {
+    font-size: calc(10px + 3vmin);
+    color: rgb(255, 255, 255);
+    background-color: rgb(37, 68, 44);
+    font-weight: bold;
+    border-radius: 0.5vmin;
+    outline: 0.25vmin;
+    outline-style: outset;
+    display: inline-block;
+    width: calc(10px + 4.5vmin);
+    padding: 1vmin;
+    margin: 1vmin;
+    height: calc(2rem + 1vmin);
+}
+form.intForm span {
+    float: left;
+}
+form.intForm input.intTextbox {
+    width: 2.5rem;
+    height: 2.5rem;
+    align-content: center;
+    font-size: calc(10px + 1.5vmin);
+    font-weight: regular;
+    float: left;
+    
+}
+form.intForm::after {
+    float: clear;
+}
