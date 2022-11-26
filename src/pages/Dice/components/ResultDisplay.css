@@ -1,0 +1,15 @@
+.resultDisplay {
+    position: relative;
+    top: 85%;
+    width: 98%;
+    height: 10%;
+    display: block;
+    padding: 1vmin;
+    border-radius: 0.25vmin;
+    background-color: #1b5b9e;
+    float: left;
+    outline: 0.25vmin;
+    outline-style: outset;
+    font-size: calc(10px + 3vmin);
+    text-align: right;
+}

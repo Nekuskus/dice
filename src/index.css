@@ -1,13 +1,114 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    /*font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif; */
+    font-family: 'Fira Sans', 'Cantarell', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: calc(10px + 1vmin);
+    position: relative;
+}
+
+body {
+    background-image: url('../public/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: auto;
+    padding: 1.5vmin;
+    margin: 0;
+}
+
+h1,
+h2,
+p,
+ul,
+li {
+    font-family: sans-serif;
+}
+
+ul.header {
+    background-color: #5D4037;
+    padding: 0;
+}
+
+ul.header li {
+    display: inline;
+    list-style-type: none;
+    margin: 0;
+}
+
+ul.header li a {
+    color: #FFF;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 1vmin;
+    display: inline-block;
+}
+
+ul.header li p {
+    color: #FFF;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 2vmin;
+    display: inline-block;
+}
+
+ul.footer {
+    bottom: 0;
+    padding: 0;
+    background-color: #795548;
+    position: relative;
+}
+
+ul.footer li {
+    display: inline;
+    list-style-type: none;
+    margin: 0;
+}
+
+
+ul.footer li p {
+    color: #FFF;
+    font-weight: bold;
+    text-decoration: none;
+    padding-top: 0.5vmin;
+    padding-left: 1.5vmin;
+    padding-right: 1.5vmin;
+    display: inline-block;
+}
+
+ul.footer li a {
+    color: inherit;
+    text-decoration: unset;
+    display: inline-block;
+}
+
+
+.content {
+    color: #212121;
+    background-color: #FFF;
+    padding: 2vmin;
+    min-height: 67vh;
+}
+
+.content .maincontent {
+    background-color: #D7CCC8;
+    min-height: 35%;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    margin: 0;
+}
+
+.content h2 {
+    color: #795548;
+    display: inline-block;
+}
+
+.content li {
+    margin-bottom: 0.5%;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
 }

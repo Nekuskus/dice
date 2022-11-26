@@ -1,0 +1,24 @@
+button {
+    border: none;
+    background-color: #607D8B;
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0.5vmin;
+    outline: 0.25vmin;
+    outline-style: outset;
+}
+
+button:hover {
+    background-color: #5F6C7A;
+}
+
+.roll {
+    grid-column: 3 / 5;
+    background-color: #795548;
+}
+
+.roll:hover {
+    background-color: #684437;
+}
