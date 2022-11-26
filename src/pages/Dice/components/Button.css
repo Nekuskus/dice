@@ -1,7 +1,7 @@
 button {
     border: none;
     background-color: #607D8B;
-    font-size: 24px;
+    font-size: calc(10px + 2vmin);
     color: rgb(255, 255, 255);
     font-weight: bold;
     cursor: pointer;
