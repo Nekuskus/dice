@@ -21,7 +21,7 @@ class Dice extends Component {
                     <Screen>
                         <ChildrenWrapper>
                         </ChildrenWrapper> 
-                        <ResultDisplay value="1d20 = 1"/>
+                        <ResultDisplay value="1d20 = 2"/>
                     </Screen>
                     <ButtonBox>
                         {

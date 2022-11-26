@@ -94,7 +94,7 @@ ul.footer li a {
 .content .maincontent {
     background-color: #D7CCC8;
     min-height: 35%;
-    padding: 1rem;
+    padding: 1vmin;
     border-radius: 0.25rem;
     margin: 0;
 }
