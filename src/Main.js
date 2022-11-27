@@ -15,13 +15,13 @@ const Main = () => {
                     <li><p>Kalkulator</p></li>
                     <li><NavLink to='/'>Start</NavLink></li>
                     <li><NavLink to='/dice'>Kości</NavLink></li>
-                    <li><NavLink to='/units'>Jednostki</NavLink></li>
+                    {/*<li><NavLink to='/units'>Jednostki</NavLink></li>*/}
                 </ul>
                 <div className='content'>
                         <Routes>
                             <Route exact path='/' element={<Home/>}></Route>
                             <Route exact path='/dice' element={<Dice/>}></Route>
-                            <Route exact path='/units' element={<Units/>}></Route>
+                            {/*<Route exact path='/units' element={<Units/>}></Route>*/}
                         </Routes>
                 </div>
                 <ul className='footer'>

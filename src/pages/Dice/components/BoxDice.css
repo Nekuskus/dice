@@ -1,15 +1,16 @@
 .boxDice {
     font-size: calc(10px + 3vmin);
     color: rgb(255, 255, 255);
-    background-color: red;
+    background-color:  rgb(153, 67, 67);
     font-weight: bold;
     border-radius: 0.5vmin;
     outline: 0.25vmin;
     outline-style: outset;
     display: inline-block;
-    width: calc((10px + 3vmin)*3);
+    width: calc((10px + 4vmin)*3);
     padding: 1vmin;
     margin: 1vmin;
+    height: calc(2rem + 1vmin);
 }
 form.diceForm span {
     float: left;

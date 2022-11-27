@@ -22,7 +22,7 @@ const przyciski = [
 element {
     sign: true/false,
     value: int
-    operation: "-"/"+","^N"...
+    operator: "-"/"+","^N"...
     isdice: true/false
     dicetype: int
     ismodifier: true/false
@@ -32,9 +32,15 @@ element {
 }
 */
 
+// this function is inclusive on both sides and assumes both numbers are integers
+function getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 const Dice = () => {
     let [state, setState] = useState({
-        elements: []
+        elements: [],
+        displaystr: ""
     });
     function handleAppend(b) {
         let elements = state.elements;
@@ -49,15 +55,16 @@ const Dice = () => {
             case "d%":
             case "dN":
                 elements.push({
-                    sign: true,
+                    sign: undefined,
                     value: 0,
-                    operation: undefined,
+                    operator: undefined,
                     isdice: true,
                     dicetype: b.slice(1),
                     ntype: (b === 'dN' ? 0 : undefined),
                     ismodifier: false,
                     isoperator: false,
-                    isnumber: false
+                    isnumber: false,
+                    isdiceresult: false
                 });
                 break;
             case "+":
@@ -67,13 +74,14 @@ const Dice = () => {
                 elements.push({
                     sign: undefined,
                     value: undefined,
-                    operation: b,
+                    operator: b,
                     isdice: false,
                     dicetype: undefined,
                     ntype: undefined,
                     ismodifier: false,
                     isoperator: true,
-                    isnumber: false
+                    isnumber: false,
+                    isdiceresult: false
                 });
                 break;
             case "^N":
@@ -81,26 +89,28 @@ const Dice = () => {
                 elements.push({
                     sign: undefined,
                     value: undefined,
-                    operation: b,
+                    operator: b,
                     isdice: false,
                     dicetype: undefined,
                     ntype: undefined,
                     ismodifier: true,
                     isoperator: false,
-                    isnumber: false
+                    isnumber: false,
+                    isdiceresult: false
                 });
                 break;
             case "#":
                 elements.push({
                     sign: undefined,
                     value: 0,
-                    operation: undefined,
+                    operator: undefined,
                     isdice: false,
                     dicetype: undefined,
                     ntype: undefined,
                     ismodifier: false,
                     isoperator: false,
-                    isnumber: true
+                    isnumber: true,
+                    isdiceresult: false
                 });
                 break;
             case "Back":
@@ -110,7 +120,7 @@ const Dice = () => {
                 console.log("this was not supposed to happen");
                 break;
         }
-        setState({ elements });
+        setState({ elements: elements });
         console.log(state.elements);
     }
     function handleSign(b) {
@@ -120,11 +130,181 @@ const Dice = () => {
         } else if (elements.at(-1).isdice) {
             elements.at(-1).sign = !(elements.at(-1).sign);
         }
-        setState({ elements });
+        setState({ elements: elements });
         // true: +, false: -
     }
     function handleRoll(b) {
-
+        let elements = JSON.parse(JSON.stringify(state.elements)); //deep copy
+        let length = elements.length;
+        let str = '';
+        let error = false;
+        let errorstr = '';
+        for (let i = 0; i < length; i++) {
+            if (elements[i].isdice) {
+                if (elements[i].value !== 0) {
+                    let values = [];
+                    switch (elements[i].dicetype) {
+                        case "4":
+                        case "6":
+                        case "8":
+                        case "10":
+                        case "12":
+                        case "20":
+                            for (let i2 = 0; i2 < elements[i].value; i2++) {
+                                values.push(getRandom(1, elements[i].dicetype));
+                            }
+                            break;
+                        case "100":
+                            for (let i2 = 0; i2 < elements[i].value; i2++) {
+                                values.push(getRandom(0, 9) * 10);
+                            }
+                            break;
+                        case "%":
+                            for (let i2 = 0; i2 < elements[i].value; i2++) {
+                                values.push(getRandom(1, 100));
+                            }
+                            break;
+                        case "N":
+                            for (let i2 = 0; i2 < elements[i].value; i2++) {
+                                if(elements[i].ntype !== 0) values.push(getRandom(1, elements[i].ntype));
+                                else values.push(0);
+                            }
+                            break;
+                    }
+                    elements[i].values = values;
+                } else {
+                    elements[i].values = [0];
+                }
+                elements[i].isdiceresult = true;
+                elements[i].isdice = false;
+            }
+        }
+        for (let i = 0; i < length; i++) {
+            if (elements[i].isdiceresult) {
+                console.log(elements[i].values)
+                if (elements.at(i + 1) !== undefined && elements.at(i + 1).ismodifier) {
+                    str += '<span class="parentnotation"> (</span><span class="arraynotation">[ </span>';
+                } else {
+                    str += '<span class="arraynotation"> [ </span>';
+                }
+                for (let i2 = 0; i2 < elements[i].values.length; i2++) {
+                    str += elements[i].values[i2];
+                    if ((i2 + 1) !== elements[i].values.length) {
+                        str += '<span class="arraynotation"> , </span>';
+                    }
+                }
+                if (elements.at(i + 1) !== undefined && elements.at(i + 1).ismodifier) {
+                    str += ' <span class="arraynotation"> ]</span><span class="parentnotation">)</span>';
+                } else {
+                    str += '<span class="arraynotation"> ] </span>';
+                }
+            } else if (elements[i].isnumber) {
+                str += ` <span class="numbernotation">${elements[i].value}</span> `
+            } else if (elements[i].isoperator) {
+                str += ` <span class="operatornotation">${elements[i].operator}</span>`
+            } else if (elements[i].ismodifier) {
+                str += `<span class="parentnotation">^</span>${elements[i].value}`;
+            }
+        }
+        console.log(str);
+        for (let i = 0; i < length; i++) {
+            if (elements[i].ismodifier && !error) {
+                if (elements[i - 1] !== undefined && elements[i - 1].isdiceresult) {
+                    elements[i - 1].values.sort((a, b) => {
+                        if (a < b) return -1;
+                        else if (a > b) return 1;
+                        else return 0;
+                    });
+                    if (elements[i].value <= elements[i - 1].values.length) {
+                        if(elements[i].value !== 0) {
+                            if (elements[i].operator === '^N') {
+                                elements[i - 1].values = elements[i - 1].values.slice(elements[i - 1].values.length - elements[i].value)
+                            } else if (elements[i].operator === 'vN') {
+                                elements[i - 1].values = elements[i - 1].values.slice(0, elements[i].value)
+                            }
+                        } else {
+                            elements[i - 1].values = [0];
+                        }
+                        elements.splice(i, 1);
+                        length -= 1;
+                        i -= 1;
+                        console.log('result = ' + JSON.stringify(elements));
+                    } else {
+                        error = true;
+                        errorstr = 'Ilość wybranych kości nie może być większa od ilości kości'
+                    }
+                } else {
+                    error = true;
+                    errorstr = 'Modyfikatorów rzutów można używać tylko po rzutach kością'
+                }
+            }
+        }
+        function getValueOrSum(el) {
+            if (el.isdiceresult) {
+                return el.values.reduce((accumulator, currentValue) => accumulator + currentValue);
+            } else if (el.isnumber) {
+                return parseFloat(el.value);
+            }
+            return undefined;
+        }
+        for (let i = 0; i < length; i++) {
+            if (elements[i].isoperator && (elements[i].operator === '*' || elements[i].operator === '/') && !error) {
+                if (elements[i - 1] !== undefined && elements[i + 1] !== undefined && !elements[i - 1].isoperator && !elements[i + 1].isoperator) {
+                    if (elements[i].operator === '*') {
+                        elements[i].value = getValueOrSum(elements[i - 1]) * getValueOrSum(elements[i + 1]);
+                        elements[i].isnumber = true;
+                        elements[i].isoperator = false;
+                    } else if (elements[i].operator === '/') {
+                        elements[i].value = getValueOrSum(elements[i - 1]) / getValueOrSum(elements[i + 1]);
+                        elements[i].isnumber = true;
+                        elements[i].isoperator = false;
+                    }
+                    console.log('result = ' + elements[i].value.toString());
+                    elements.splice(i + 1, 1);
+                    elements.splice(i - 1, 1);
+                    length -= 2;
+                    i -= 1;
+                } else {
+                    error = true;
+                    errorstr = 'Operatorów można używać tylko pomiędzy wyrażeniami';
+                }
+            }
+        }
+        for (let i = 0; i < length; i++) {
+            if (elements[i].isoperator && (elements[i].operator === '+' || elements[i].operator === '-') && !error) {
+                if (elements[i - 1] !== undefined && elements[i + 1] !== undefined && !elements[i - 1].isoperator && !elements[i + 1].isoperator) {
+                    if (elements[i].operator === '+') {
+                        elements[i].value = getValueOrSum(elements[i - 1]) + getValueOrSum(elements[i + 1]);
+                        elements[i].isnumber = true;
+                        elements[i].isoperator = false;
+                    } else if (elements[i].operator === '-') {
+                        elements[i].value = getValueOrSum(elements[i - 1]) - getValueOrSum(elements[i + 1]);
+                        elements[i].isnumber = true;
+                        elements[i].isoperator = false;
+                    }
+                    elements.splice(i + 1, 1);
+                    elements.splice(i - 1, 1);
+                    length -= 2;
+                    i -= 1;
+                } else {
+                    error = true;
+                    errorstr = 'Operatorów można używać tylko pomiędzy wyrażeniami';
+                }
+            }
+        }
+        if(elements[0].isdiceresult) {
+            elements[0].value = getValueOrSum(elements[0])
+            elements[0].isdiceresult = false;
+            elements[0].isnumber = true;
+        }
+        let result = elements[0].value;
+        let display = document.getElementById('resultDisplay');
+        if (!error) {
+            display.innerHTML = str + " = " + result.toString();
+        } else {
+            display.innerHTML = errorstr;
+        }
+        setState({ elements: state.elements });
     }
     function handleDiceChange(id) {
         let elements = state.elements;
@@ -136,7 +316,7 @@ const Dice = () => {
             value = 0;
         }
         elements.at(id).value = value;
-        setState({ elements });
+        setState({ elements: elements });
     }
     function handleDicetypeChange(id) {
         let elements = state.elements;
@@ -148,7 +328,7 @@ const Dice = () => {
             value = 0;
         }
         elements.at(id).ntype = value;
-        setState({ elements });
+        setState({ elements: elements });
     }
     function handleNumberChange(id) {
         let elements = state.elements;
@@ -160,7 +340,7 @@ const Dice = () => {
             value = 0;
         }
         elements.at(id).value = value;
-        setState({ elements });
+        setState({ elements: elements });
     }
     function handleModifierChange(id) {
         let elements = state.elements;
@@ -172,7 +352,7 @@ const Dice = () => {
             value = 0;
         }
         elements.at(id).value = value;
-        setState({ elements });
+        setState({ elements: elements });
     }
     return (
         <div>
@@ -216,7 +396,7 @@ const Dice = () => {
                                     return (
                                         <BoxOperator
                                             key={id}
-                                            value={el.operation}
+                                            value={el.operator}
                                         />
                                     )
                                 } else if (el.ismodifier) {
@@ -224,6 +404,8 @@ const Dice = () => {
                                         <BoxModifier
                                             key={id}
                                             id={id}
+                                            value={el.operator.slice(0, 1)
+                                            }
                                             onChange={handleModifierChange.bind(this, id)}
                                         />
                                     )
@@ -231,7 +413,7 @@ const Dice = () => {
                             })
                         }
                     </ChildrenWrapper>
-                    <ResultDisplay value="1d20 = 2" />
+                    <ResultDisplay value={'1d20 = 2'} />
                 </Screen>
                 <ButtonBox>
                     {

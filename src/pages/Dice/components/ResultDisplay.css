@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
-.resultDisplay {
+#resultDisplay {
     position: relative;
     bottom: -1%;
     width: 98%;
@@ -14,4 +14,22 @@
     font-size: calc(10px + 3vmin);
     text-align: right;
     font-family: 'Consolas', sans-serif;
+    overflow-y: scroll;
+}
+
+.arraynotation {
+    font-style: italic;
+    color:rgb(54, 17, 158);
+}
+.parentnotation {
+    font-style: italic;
+    color: rgb(24, 8, 163)
+}
+.numbernotation {
+    text-decoration: underline;
+    text-decoration-color: green;
+}
+.operatornotation {
+    font-style: italic;
+    color: #00bff9;
 }
