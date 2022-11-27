@@ -142,6 +142,11 @@ const Dice = () => {
         for (let i = 0; i < length; i++) {
             if (elements[i].isdice) {
                 if (elements[i].value !== 0) {
+                    let negative = false;
+                    if(elements[i].value < 0) {
+                        negative = true;
+                        elements[i].value *= -1;
+                    }
                     let values = [];
                     switch (elements[i].dicetype) {
                         case "4":
@@ -172,6 +177,11 @@ const Dice = () => {
                             break;
                     }
                     elements[i].values = values;
+                    if(negative) {
+                        for(let i2 = 0; i2 < elements[i].values.length; i2++) {
+                            elements[i].values[i2] *= -1;
+                        }
+                    }
                 } else {
                     elements[i].values = [0];
                 }
@@ -300,7 +310,7 @@ const Dice = () => {
         let result = elements[0].value;
         let display = document.getElementById('resultDisplay');
         if (!error) {
-            display.innerHTML = str + " = " + result.toString();
+            display.innerHTML = str + "<span class='operatornotation'> = </span><span class='numbernotation'>" + result.toString() + "</span>";
         } else {
             display.innerHTML = errorstr;
         }
@@ -310,7 +320,7 @@ const Dice = () => {
         let elements = state.elements;
         let input = document.getElementById(id.toString().concat("diceType"))
         let value = input.value;
-        let correct = /^\d+$/.test(value) && value;
+        let correct = /[-]?^\d+$/.test(value) && value;
         if (!correct) {
             input.value = 0;
             value = 0;
@@ -334,7 +344,7 @@ const Dice = () => {
         let elements = state.elements;
         let input = document.getElementById(id.toString().concat("int"))
         let value = input.value;
-        let correct = /^\d+$/.test(value) && value;
+        let correct = /^[-]?\d+$/.test(value) && value;
         if (!correct) {
             input.value = 0;
             value = 0;
