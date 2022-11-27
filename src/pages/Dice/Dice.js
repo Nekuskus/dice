@@ -320,7 +320,7 @@ const Dice = () => {
         let elements = state.elements;
         let input = document.getElementById(id.toString().concat("diceType"))
         let value = input.value;
-        let correct = /[-]?^\d+$/.test(value) && value;
+        let correct = /[-]?^\d+$/.test(value) && value !== undefined;
         if (!correct) {
             input.value = 0;
             value = 0;
@@ -344,7 +344,7 @@ const Dice = () => {
         let elements = state.elements;
         let input = document.getElementById(id.toString().concat("int"))
         let value = input.value;
-        let correct = /^[-]?\d+$/.test(value) && value;
+        let correct = /^[-]?\d+$/.test(value) && value !== negative;
         if (!correct) {
             input.value = 0;
             value = 0;
