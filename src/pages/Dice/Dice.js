@@ -213,7 +213,7 @@ const Dice = () => {
             } else if (elements[i].isoperator) {
                 str += ` <span class="operatornotation">${elements[i].operator}</span>`
             } else if (elements[i].ismodifier) {
-                str += `<span class="parentnotation">^</span>${elements[i].value}`;
+                str += `<span class="parentnotation">${elements[i].operator.slice(0, 1)}</span>${elements[i].value}`;
             }
         }
         console.log(str);
@@ -316,7 +316,7 @@ const Dice = () => {
                 elements[0].ismodifier = false;
             }
         }
-        if(elements[0].isdiceresult) {
+        if (elements[0].isdiceresult) {
             elements[0].value = getValueOrSum(elements[0])
             elements[0].isnumber = true;
             elements[0].isdiceresult = false;
@@ -430,8 +430,7 @@ const Dice = () => {
                                         <BoxModifier
                                             key={id}
                                             id={id}
-                                            value={el.operator.slice(0, 1)
-                                            }
+                                            value={el.operator.slice(0, 1)}
                                             onBlur={handleModifierBlur.bind(this, id)}
                                         />
                                     )
