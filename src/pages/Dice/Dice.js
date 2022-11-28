@@ -143,7 +143,7 @@ const Dice = () => {
             if (elements[i].isdice) {
                 if (elements[i].value !== 0) {
                     let negative = false;
-                    if(elements[i].value < 0) {
+                    if (elements[i].value < 0) {
                         negative = true;
                         elements[i].value *= -1;
                     }
@@ -171,14 +171,14 @@ const Dice = () => {
                             break;
                         case "N":
                             for (let i2 = 0; i2 < elements[i].value; i2++) {
-                                if(elements[i].ntype !== 0) values.push(getRandom(1, elements[i].ntype));
+                                if (elements[i].ntype !== 0) values.push(getRandom(1, elements[i].ntype));
                                 else values.push(0);
                             }
                             break;
                     }
                     elements[i].values = values;
-                    if(negative) {
-                        for(let i2 = 0; i2 < elements[i].values.length; i2++) {
+                    if (negative) {
+                        for (let i2 = 0; i2 < elements[i].values.length; i2++) {
                             elements[i].values[i2] *= -1;
                         }
                     }
@@ -226,7 +226,7 @@ const Dice = () => {
                         else return 0;
                     });
                     if (elements[i].value <= elements[i - 1].values.length) {
-                        if(elements[i].value !== 0) {
+                        if (elements[i].value !== 0) {
                             if (elements[i].operator === '^N') {
                                 elements[i - 1].values = elements[i - 1].values.slice(elements[i - 1].values.length - elements[i].value)
                             } else if (elements[i].operator === 'vN') {
@@ -302,10 +302,10 @@ const Dice = () => {
                 }
             }
         }
-	if (elements.length > 1) {
+        if (elements.length > 1) {
             console.log("More than 1 element left after eval, assuming multiplication");
-	    for (let i = 0; elements[i].length - 1; i++) {
-                elements[0].value = getValueOrSum(elements[0]) *  getValueOrSum(elements[1]);
+            for (let i = 0; i < elements[i].length - 1; i++) {
+                elements[0].value = getValueOrSum(elements[0]) * getValueOrSum(elements[1]);
                 elements.splice(1, 1);
                 elements[0].isnumber = true;
                 elements[0].isdiceresult = false;
@@ -313,6 +313,13 @@ const Dice = () => {
                 // Cannot be modifier but I'll set it anyways
                 elements[0].ismodifier = false;
             }
+        }
+        if(elements[0].isdiceresult) {
+            elements[0].value = getValueOrSum(elements[0])
+            elements[0].isnumber = true;
+            elements[0].isdiceresult = false;
+            elements[0].isoperator = false;
+            elements[0].ismodifier = false;
         }
         let result = elements[0].value;
         let display = document.getElementById('resultDisplay');
