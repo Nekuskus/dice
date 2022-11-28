@@ -1,16 +1,16 @@
 import "./BoxNDice.css";
 
-const BoxNDice = ({onChange, id, onChangeN }) => {
+const BoxNDice = ({onBlur, id, onBlurN }) => {
     const handleFocus = (event) => event.target.select();
     return (
         <div className='boxNDice'>
             <form className='diceNForm'>
-                <input className='diceNTextbox' type='text' onFocus={handleFocus} onChange={onChange.bind(this, id)} defaultValue='0' id={id.toString().concat('diceType')}/>
+                <input className='diceNTextbox' type='text' onFocus={handleFocus} onBlur={onBlur.bind(this, id)} defaultValue='0' id={id.toString().concat('diceType')}/>
                 <div>
                     <span className="diceNSpan">
                         d
                     </span>
-                    <input className='diceNTextbox' type='text' onFocus={handleFocus} onChange={onChangeN.bind(this, id)} defaultValue='0' id={id.toString().concat('nType')}/>
+                    <input className='diceNTextbox' type='text' onFocus={handleFocus} onBlur={onBlurN.bind(this, id)} defaultValue='0' id={id.toString().concat('nType')}/>
                 </div>
             </form>
         </div>

@@ -316,11 +316,11 @@ const Dice = () => {
         }
         setState({ elements: state.elements });
     }
-    function handleDiceChange(id) {
+    function handleDiceBlur(id) {
         let elements = state.elements;
         let input = document.getElementById(id.toString().concat("diceType"))
         let value = input.value;
-        let correct = /[-]?^\d+$/.test(value) && value !== undefined;
+        let correct = /-?^\d+$/.test(value) && value !== undefined;
         if (!correct) {
             input.value = 0;
             value = 0;
@@ -328,7 +328,7 @@ const Dice = () => {
         elements.at(id).value = value;
         setState({ elements: elements });
     }
-    function handleDicetypeChange(id) {
+    function handleDicetypeBlur(id) {
         let elements = state.elements;
         let input = document.getElementById(id.toString().concat("nType"))
         let value = input.value;
@@ -340,11 +340,11 @@ const Dice = () => {
         elements.at(id).ntype = value;
         setState({ elements: elements });
     }
-    function handleNumberChange(id) {
+    function handleNumberBlur(id) {
         let elements = state.elements;
         let input = document.getElementById(id.toString().concat("int"))
         let value = input.value;
-        let correct = /^[-]?\d+$/.test(value) && value !== undefined;
+        let correct = /^-?\d+$/.test(value) && value !== undefined;
         if (!correct) {
             input.value = 0;
             value = 0;
@@ -352,11 +352,11 @@ const Dice = () => {
         elements.at(id).value = value;
         setState({ elements: elements });
     }
-    function handleModifierChange(id) {
+    function handleModifierBlur(id) {
         let elements = state.elements;
         let input = document.getElementById(id.toString().concat("mod"))
         let value = input.value;
-        let correct = /^\d+$/.test(value) && value;
+        let correct = /^\d+$/.test(value) && value !== undefined;
         if (!correct) {
             input.value = 0;
             value = 0;
@@ -379,8 +379,8 @@ const Dice = () => {
                                             <BoxNDice
                                                 key={id}
                                                 id={id}
-                                                onChange={handleDiceChange.bind(this, id)}
-                                                onChangeN={handleDicetypeChange.bind(this, id)}
+                                                onBlur={handleDiceBlur.bind(this, id)}
+                                                onBlurN={handleDicetypeBlur.bind(this, id)}
                                             />
                                         )
                                     }
@@ -390,7 +390,7 @@ const Dice = () => {
                                                 key={id}
                                                 id={id}
                                                 dicetype={el.dicetype}
-                                                onChange={handleDiceChange.bind(this, id)}
+                                                onBlur={handleDiceBlur.bind(this, id)}
                                             />
                                         )
                                     }
@@ -399,7 +399,7 @@ const Dice = () => {
                                         <BoxInt
                                             key={id}
                                             id={id}
-                                            onChange={handleNumberChange.bind(this, id)}
+                                            onBlur={handleNumberBlur.bind(this, id)}
                                         />
                                     )
                                 } else if (el.isoperator) {
@@ -416,7 +416,7 @@ const Dice = () => {
                                             id={id}
                                             value={el.operator.slice(0, 1)
                                             }
-                                            onChange={handleModifierChange.bind(this, id)}
+                                            onBlur={handleModifierBlur.bind(this, id)}
                                         />
                                     )
                                 }
