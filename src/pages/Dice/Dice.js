@@ -302,10 +302,17 @@ const Dice = () => {
                 }
             }
         }
-        if(elements[0].isdiceresult) {
-            elements[0].value = getValueOrSum(elements[0])
-            elements[0].isdiceresult = false;
-            elements[0].isnumber = true;
+	if (elements.length > 1) {
+            console.log("More than 1 element left after eval, assuming multiplication");
+	    for (let i = 0; elements[i].length - 1; i++) {
+                elements[0].value = getValueOrSum(elements[0]) *  getValueOrSum(elements[1]);
+                elements.splice(1, 1);
+                elements[0].isnumber = true;
+                elements[0].isdiceresult = false;
+                elements[0].isoperator = false;
+                // Cannot be modifier but I'll set it anyways
+                elements[0].ismodifier = false;
+            }
         }
         let result = elements[0].value;
         let display = document.getElementById('resultDisplay');
