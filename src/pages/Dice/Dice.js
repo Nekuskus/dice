@@ -304,6 +304,7 @@ const Dice = () => {
         }
         if (elements.length > 1) {
             console.log("More than 1 element left after eval, assuming multiplication");
+            debugger;
             for (let i = 0; i < elements.length - 1; i++) {
                 elements[0].value = getValueOrSum(elements[0]) * getValueOrSum(elements[1]);
                 elements.splice(1, 1);
@@ -346,7 +347,7 @@ const Dice = () => {
         let elements = state.elements;
         let input = document.getElementById(id.toString().concat("nType"))
         let value = input.value;
-        let correct = /^\d+$/.test(value) && value;
+        let correct = /^-?\d+$/.test(value) && value;
         if (!correct) {
             input.value = 0;
             value = 0;
