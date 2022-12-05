@@ -28,6 +28,7 @@ element {
     ismodifier: true/false
     isoperator: true/false
     isnumber: true/false
+    isdiceresult: true/false
     ntype: int
 }
 */
@@ -258,6 +259,19 @@ const Dice = () => {
             return undefined;
         }
         for (let i = 0; i < length; i++) {
+            if ((elements[i].isnumber || elements[i].isdiceresult) && (elements[i + 1].isnumber || elements[i + 1].isdiceresult)) {
+                console.log('Assuming implicit multiplication before eval')
+                elements[i].value = getValueOrSum(elements[i]) * getValueOrSum(elements[i + 1]);
+                elements.splice(i + 1, 1);
+                length -= 1;
+                elements[i].isnumber = true;
+                elements[i].isdiceresult = false;
+                elements[i].isoperator = false;
+                // Cannot be modifier but I'll set it anyways
+                elements[i].ismodifier = false;
+            }
+        }
+        for (let i = 0; i < length; i++) {
             if (elements[i].isoperator && (elements[i].operator === '*' || elements[i].operator === '/') && !error) {
                 if (elements[i - 1] !== undefined && elements[i + 1] !== undefined && !elements[i - 1].isoperator && !elements[i + 1].isoperator) {
                     if (elements[i].operator === '*') {
@@ -302,10 +316,8 @@ const Dice = () => {
                 }
             }
         }
-        debugger;
         if (elements.length > 1) {
             console.log("More than 1 element left after eval, assuming multiplication");
-            debugger;
             for (let i = 0; i < elements.length - 1; i++) {
                 elements[0].value = getValueOrSum(elements[0]) * getValueOrSum(elements[1]);
                 elements.splice(1, 1);
@@ -323,7 +335,7 @@ const Dice = () => {
             elements[0].isoperator = false;
             elements[0].ismodifier = false;
         }
-        let result = Math.round(elements[0].value*100)/100;
+        let result = Math.round(elements[0].value * 100) / 100;
         let display = document.getElementById('resultDisplay');
         if (!error) {
             display.innerHTML = str + "<span class='operatornotation'> = </span><span class='numbernotation'>" + result.toString() + "</span>";
