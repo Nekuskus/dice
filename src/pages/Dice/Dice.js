@@ -360,12 +360,12 @@ const Dice = () => {
         let elements = state.elements;
         let input = document.getElementById(id.toString().concat("int"))
         let value = input.value;
-        let correct = /^-?\d+$/.test(value) && value !== undefined;
+        let correct = /^-?\d*(\.(\d)+)?$/.test(value) && value !== undefined;
         if (!correct) {
             input.value = 0;
             value = 0;
         }
-        elements.at(id).value = value;
+        elements.at(id).value = (value.startsWith('.') ? "0" + value : value);
         setState({ elements: elements });
     }
     function handleModifierBlur(id) {
