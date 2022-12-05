@@ -136,11 +136,11 @@ const Dice = () => {
     }
     function handleRoll(b) {
         let elements = JSON.parse(JSON.stringify(state.elements)); //deep copy
-        let length = elements.length;
+        //let length = elements.length;
         let str = '';
         let error = false;
         let errorstr = '';
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < elements.length; i++) {
             if (elements[i].isdice) {
                 if (elements[i].value !== 0) {
                     let negative = false;
@@ -190,7 +190,7 @@ const Dice = () => {
                 elements[i].isdice = false;
             }
         }
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < elements.length; i++) {
             if (elements[i].isdiceresult) {
                 console.log(elements[i].values)
                 if (elements.at(i + 1) !== undefined && elements.at(i + 1).ismodifier) {
@@ -218,7 +218,7 @@ const Dice = () => {
             }
         }
         console.log(str);
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < elements.length; i++) {
             if (elements[i].ismodifier && !error) {
                 if (elements[i - 1] !== undefined && elements[i - 1].isdiceresult) {
                     elements[i - 1].values.sort((a, b) => {
@@ -237,7 +237,7 @@ const Dice = () => {
                             elements[i - 1].values = [0];
                         }
                         elements.splice(i, 1);
-                        length -= 1;
+                        //length -= 1;
                         i -= 1;
                         console.log('result = ' + JSON.stringify(elements));
                     } else {
@@ -258,12 +258,12 @@ const Dice = () => {
             }
             return undefined;
         }
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < elements.length - 1; i++) {
             if ((elements[i].isnumber || elements[i].isdiceresult) && (elements[i + 1].isnumber || elements[i + 1].isdiceresult)) {
                 console.log('Assuming implicit multiplication before eval')
                 elements[i].value = getValueOrSum(elements[i]) * getValueOrSum(elements[i + 1]);
                 elements.splice(i + 1, 1);
-                length -= 1;
+                //length -= 1;
                 elements[i].isnumber = true;
                 elements[i].isdiceresult = false;
                 elements[i].isoperator = false;
@@ -271,7 +271,7 @@ const Dice = () => {
                 elements[i].ismodifier = false;
             }
         }
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < elements.length; i++) {
             if (elements[i].isoperator && (elements[i].operator === '*' || elements[i].operator === '/') && !error) {
                 if (elements[i - 1] !== undefined && elements[i + 1] !== undefined && !elements[i - 1].isoperator && !elements[i + 1].isoperator) {
                     if (elements[i].operator === '*') {
@@ -286,7 +286,7 @@ const Dice = () => {
                     console.log('result = ' + elements[i].value.toString());
                     elements.splice(i + 1, 1);
                     elements.splice(i - 1, 1);
-                    length -= 2;
+                    //length -= 2;
                     i -= 1;
                 } else {
                     error = true;
@@ -294,7 +294,7 @@ const Dice = () => {
                 }
             }
         }
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < elements.length; i++) {
             if (elements[i].isoperator && (elements[i].operator === '+' || elements[i].operator === '-') && !error) {
                 if (elements[i - 1] !== undefined && elements[i + 1] !== undefined && !elements[i - 1].isoperator && !elements[i + 1].isoperator) {
                     if (elements[i].operator === '+') {
@@ -308,7 +308,7 @@ const Dice = () => {
                     }
                     elements.splice(i + 1, 1);
                     elements.splice(i - 1, 1);
-                    length -= 2;
+                    //length -= 2;
                     i -= 1;
                 } else {
                     error = true;
@@ -317,7 +317,7 @@ const Dice = () => {
             }
         }
         if (elements.length > 1) {
-            console.log("More than 1 element left after eval, assuming multiplication");
+            console.log("More than 1 element left after eval, assuming implicit multiplication");
             for (let i = 0; i < elements.length - 1; i++) {
                 elements[0].value = getValueOrSum(elements[0]) * getValueOrSum(elements[1]);
                 elements.splice(1, 1);
