@@ -360,7 +360,8 @@ const Dice = () => {
         let elements = state.elements;
         let input = document.getElementById(id.toString().concat("int"))
         let value = input.value;
-        let correct = /^-?\d*(\.(\d)+)?$/.test(value) && value !== undefined;
+        //let correct = /^-?\d*(\.(\d)+)?$/.test(value) && value !== undefined;
+        let correct = isFinite(Number(value));
         if (!correct) {
             input.value = 0;
             value = 0;
