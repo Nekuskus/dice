@@ -260,15 +260,17 @@ const Dice = () => {
         }
         for (let i = 0; i < elements.length - 1; i++) {
             if ((elements[i].isnumber || elements[i].isdiceresult) && (elements[i + 1].isnumber || elements[i + 1].isdiceresult)) {
-                console.log('Assuming implicit multiplication before eval')
-                elements[i].value = getValueOrSum(elements[i]) * getValueOrSum(elements[i + 1]);
-                elements.splice(i + 1, 1);
-                //length -= 1;
-                elements[i].isnumber = true;
-                elements[i].isdiceresult = false;
-                elements[i].isoperator = false;
-                // Cannot be modifier but I'll set it anyways
-                elements[i].ismodifier = false;
+                if (!(i > 0 && elements[i-1].isoperator && elements[i-1].operator === '/') || (i === 0)) {
+                    console.log('Assuming implicit multiplication before eval')
+                    elements[i].value = getValueOrSum(elements[i]) * getValueOrSum(elements[i + 1]);
+                    elements.splice(i + 1, 1);
+                    //length -= 1;
+                    elements[i].isnumber = true;
+                    elements[i].isdiceresult = false;
+                    elements[i].isoperator = false;
+                    // Cannot be modifier but I'll set it anyways
+                    elements[i].ismodifier = false;
+                }
             }
         }
         for (let i = 0; i < elements.length; i++) {
@@ -335,10 +337,12 @@ const Dice = () => {
             elements[0].isoperator = false;
             elements[0].ismodifier = false;
         }
+        let rounded = false;
+        if ((Math.round(elements[0].value * 100) / 100) != elements[0].value) rounded = true;
         let result = Math.round(elements[0].value * 100) / 100;
         let display = document.getElementById('resultDisplay');
         if (!error) {
-            display.innerHTML = str + "<span class='operatornotation'> = </span><span class='numbernotation'>" + result.toString() + "</span>";
+            display.innerHTML = str + "<span class='operatornotation'>" + (rounded ? ' ≈ ' : ' = ') + "</span><span class='numbernotation'>" + result.toString() + "</span>";
         } else {
             display.innerHTML = errorstr;
         }
