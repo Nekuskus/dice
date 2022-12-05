@@ -323,7 +323,7 @@ const Dice = () => {
             elements[0].isoperator = false;
             elements[0].ismodifier = false;
         }
-        let result = elements[0].value;
+        let result = Math.round(elements[0].value*100)/100;
         let display = document.getElementById('resultDisplay');
         if (!error) {
             display.innerHTML = str + "<span class='operatornotation'> = </span><span class='numbernotation'>" + result.toString() + "</span>";
