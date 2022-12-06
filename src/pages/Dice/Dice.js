@@ -338,8 +338,8 @@ const Dice = () => {
             elements[0].ismodifier = false;
         }
         let rounded = false;
-        if ((Math.round(elements[0].value * 100) / 100) != elements[0].value) rounded = true;
-        let result = Math.round(elements[0].value * 100) / 100;
+        if ((Math.round(elements[0].value * 100000000) / 100000000) != elements[0].value) rounded = true;
+        let result = Math.round(elements[0].value * 100000000) / 100000000;
         let display = document.getElementById('resultDisplay');
         if (!error) {
             display.innerHTML = str + "<span class='operatornotation'>" + (rounded ? ' ≈ ' : ' = ') + "</span><span class='numbernotation'>" + result.toString() + "</span>";
