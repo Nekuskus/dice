@@ -1,3 +1,3 @@
 # Dice
 
-## I'll put something here eventually
+This is a simple project meant for practicing and showcasing React components as part of a coding class presentation I've done.
